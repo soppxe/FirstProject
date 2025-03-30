@@ -15,10 +15,10 @@ public class LoginTests {
 
     @Test
     public void testValidLogin() {
-        loginPage.setLogin("validLogin");
-        loginPage.setPassword("validPassword");
+        loginPage.setLogin("technopol40");
+        loginPage.setPassword("technopolisPassword");
         loginPage.clickLoginButton();
-        assertTrue("Вход не выполнен", loginPage.isLoggedIn());;
+        assertTrue("Вход выполнен, testValidLogin прошел успешно", loginPage.isLoggedIn());;
     }
 
     @Test
@@ -26,23 +26,23 @@ public class LoginTests {
         loginPage.setLogin("invalidLogin");
         loginPage.setPassword("invalidPassword");
         loginPage.clickLoginButton();
-        assertTrue(loginPage.isErrorMessageVisible());
+        assertTrue("Вход не выполнен, testInvalidLogin прошел успешно", loginPage.isErrorMessageVisible());
     }
 
     @Test
     public void testEmptyLogin() {
         loginPage.setLogin("");
-        loginPage.setPassword("validPassword");
+        loginPage.setPassword("technopolisPassword");
         loginPage.clickLoginButton();
-        assertTrue("Сообщение об ошибке не отображается", loginPage.isErrorMessageVisible());
+        assertTrue("Вход не выполнен, testEmptyLogin прошел успешно", loginPage.isErrorMessageVisible());
     }
 
     @Test
     public void testEmptyPassword() {
-        loginPage.setLogin("validLogin");
+        loginPage.setLogin("technopol40");
         loginPage.setPassword("");
         loginPage.clickLoginButton();
-        assertTrue("Сообщение об ошибке не отображается", loginPage.isErrorMessageVisible());
+        assertTrue("Вход не выполнен,testEmptyPassword прошел успешно", loginPage.isErrorMessageVisible());
     }
 
     @Test
@@ -50,6 +50,6 @@ public class LoginTests {
         loginPage.setLogin("");
         loginPage.setPassword("");
         loginPage.clickLoginButton();
-        assertTrue("Сообщение об ошибке не отображается", loginPage.isErrorMessageVisible());
+        assertTrue("Вход не выполнен, testEmptyFields прошел успешно", loginPage.isErrorMessageVisible());
     }
 }
