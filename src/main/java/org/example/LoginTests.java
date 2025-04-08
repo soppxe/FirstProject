@@ -1,55 +1,71 @@
 package org.example;
-import static org.junit.Assert.assertTrue;
-import org.junit.Before;
-import org.junit.Test;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertAll;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.DisplayName;
 
 
-public class LoginTests {
-    private LoginPage loginPage;
+public class LoginTests extends BaseTest {
+    private static final String validLogin = "technopol40";
+    private static final String validPassword = "technopolisPassword";
+    private static final String invalidLogin = "invalidLogin";
+    private static final String invalidPassword = "invalidPassword";
 
-    @Before
-    public void setUp() {
-        loginPage = new LoginPage();
-        loginPage.openPage();
-    }
-
+    @DisplayName("Проверка успешного входа с корректными данными")
     @Test
     public void testValidLogin() {
-        loginPage.setLogin("technopol40");
-        loginPage.setPassword("technopolisPassword");
+        loginPage.setLogin(validLogin);
+        loginPage.setPassword(validPassword);
         loginPage.clickLoginButton();
-        assertTrue("Вход выполнен, testValidLogin прошел успешно", loginPage.isLoggedIn());;
+        homePage = new HomePage();
+        assertAll("Проверка успешного входа",
+                () -> assertTrue(homePage.isLoggedIn(), "Пользователь должен быть авторизован")
+        );
     }
 
+    @DisplayName("Проверка входа с некорректными данными")
     @Test
     public void testInvalidLogin() {
-        loginPage.setLogin("invalidLogin");
-        loginPage.setPassword("invalidPassword");
+        loginPage.setLogin(invalidLogin);
+        loginPage.setPassword(invalidPassword);
         loginPage.clickLoginButton();
-        assertTrue("Вход не выполнен, testInvalidLogin прошел успешно", loginPage.isErrorMessageVisible());
+        assertAll("Проверка неуспешного входа",
+                () -> assertTrue(loginPage.isErrorMessageVisible(), "Сообщение об ошибке должно быть видимым")
+        );
     }
 
+    @DisplayName("Проверка входа с пустым логином")
     @Test
     public void testEmptyLogin() {
         loginPage.setLogin("");
-        loginPage.setPassword("technopolisPassword");
+        loginPage.setPassword(validPassword);
         loginPage.clickLoginButton();
-        assertTrue("Вход не выполнен, testEmptyLogin прошел успешно", loginPage.isErrorMessageVisible());
+        assertAll("Проверка неуспешного входа",
+                () -> assertTrue(loginPage.isErrorMessageVisible(), "Сообщение об ошибке должно быть видимым")
+        );
     }
 
+    @DisplayName("Проверка входа с пустым паролем")
     @Test
     public void testEmptyPassword() {
-        loginPage.setLogin("technopol40");
+        loginPage.setLogin(validLogin);
         loginPage.setPassword("");
         loginPage.clickLoginButton();
-        assertTrue("Вход не выполнен,testEmptyPassword прошел успешно", loginPage.isErrorMessageVisible());
+        assertAll("Проверка неуспешного входа",
+                () -> assertTrue(loginPage.isErrorMessageVisible(), "Сообщение об ошибке должно быть видимым")
+        );
     }
 
+    @DisplayName("Проверка входа с пустыми полями")
     @Test
     public void testEmptyFields() {
         loginPage.setLogin("");
         loginPage.setPassword("");
         loginPage.clickLoginButton();
-        assertTrue("Вход не выполнен, testEmptyFields прошел успешно", loginPage.isErrorMessageVisible());
+        assertAll("Проверка неуспешного входа",
+                () -> assertTrue(loginPage.isErrorMessageVisible(), "Сообщение об ошибке должно быть видимым")
+        );
     }
 }

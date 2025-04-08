@@ -11,10 +11,6 @@ public class LoginPage {
     private SelenideElement loginButton = $(".button-pro.__wide");
     private SelenideElement errorMessage = $(".input-e.login_error");
 
-    public void openPage() {
-        open("https://ok.ru/?ysclid=m8qaqie2it932306182");
-    }
-
     public void setLogin(String login) {
         emailField.setValue(login);
     }
@@ -29,9 +25,5 @@ public class LoginPage {
 
     public boolean isErrorMessageVisible() {
         return errorMessage.isDisplayed();
-    }
-
-    public boolean isLoggedIn() {
-        return $x("//a[contains(@href, '/dk?cmd')]").exists();
     }
 }
