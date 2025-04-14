@@ -12,6 +12,8 @@ public class HomePage {
 
     private final SelenideElement loggedInElement = $x(loggedInElementLocator).shouldBe(visible.because("Система не видит локатор домашней страницы"));
 
+    //В LoginPage и HomePage добавлены проверки видимости элементов, реализуем паттерн Loadable Component.
+
     public boolean isLoggedIn() { // Метод, проверяющий, смогли ли мы зайти на домашнюю страницу
         return loggedInElement.exists();
     }
