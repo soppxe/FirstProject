@@ -1,8 +1,12 @@
-package org.example;
+package Tests;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import Pages.LoginPage;
+import org.example.DataRegistry;
+import Pages.HomePage;
+import org.example.UserCredentials;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -16,11 +20,15 @@ public class LoginTests extends BaseTest {
     public void testValidLogin() {
         String uniqueLogin = DataRegistry.generateUniqueUsername("technopol");
         // Реализация паттерна DataRegistry в LoginTests
-        HomePage homePage = loginPage.login(new UserCredentials(uniqueLogin, "technopolisPassword"));
-        assertAll("Проверка успешного входа",
-                () -> assertTrue(homePage.isLoggedIn(), "Пользователь должен быть авторизован")
-        );
+        HomePage homePage = new LoginPage()
+                .setLogin("technopol40")
+                .setPassword("technopolisPassword")
+                .clickLoginButton()
+                .getHomePage();
+
+        assertTrue(homePage.isLoggedIn(), "Пользователь должен быть авторизован");
     }
+
 
     @DisplayName("Проверка входа с некорректными данными")
     @ParameterizedTest // В LoginTests добавлен параметризованный тест с использованием @ParameterizedTest и @CsvSource, реализуем паттерн Data Provider
@@ -30,11 +38,12 @@ public class LoginTests extends BaseTest {
             "technopol40, ", " , "
     })
     public void testInvalidLogin(String login, String password) {
-        loginPage.setLogin(login);
-        loginPage.setPassword(password);
-        loginPage.clickLoginButton();
-        assertAll("Проверка неуспешного входа",
-                () -> assertTrue(loginPage.isErrorMessageVisible(), "Сообщение об ошибке должно быть видимым")
-        );
+        LoginPage loginPage = new LoginPage()
+                .setLogin(login)
+                .setPassword(password)
+                .clickLoginButton()
+                .getLoginPage();
+
+        assertTrue(loginPage.isErrorMessageVisible(), "Сообщение об ошибке должно быть видимым");
     }
 }
