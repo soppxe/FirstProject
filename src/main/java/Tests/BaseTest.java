@@ -3,6 +3,7 @@ package Tests;
 //BaseTest - базовый класс для всех тестов, который будет содержать логику открытия и закрытия браузера.
 
 import Pages.LoginPage;
+import org.example.UserCredentials;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 
@@ -24,5 +25,14 @@ public class BaseTest {
         // Закрытие браузера
         System.out.println("Running tearDown method...");
         closeWebDriver();
+    }
+
+    // Метод для выполнения входа
+    protected void performLogin() {
+        UserCredentials credentials = new UserCredentials("technopol40", "technopolisPassword");
+        new LoginPage()
+                .setLogin(credentials.getLogin())
+                .setPassword(credentials.getPassword())
+                .clickLoginButton();
     }
 }

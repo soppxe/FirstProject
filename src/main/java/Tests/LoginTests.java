@@ -26,6 +26,7 @@ public class LoginTests extends BaseTest {
                 .clickLoginButton()
                 .getHomePage();
 
+        // Проверяем, что пользователь авторизован
         assertTrue(homePage.isLoggedIn(), "Пользователь должен быть авторизован");
     }
 
@@ -44,6 +45,7 @@ public class LoginTests extends BaseTest {
                 .clickLoginButton()
                 .getLoginPage();
 
+        // Проверяем, что сообщение об ошибке видимо
         assertTrue(loginPage.isErrorMessageVisible(), "Сообщение об ошибке должно быть видимым");
     }
 }
